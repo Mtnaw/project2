@@ -49,6 +49,7 @@ export default function EditAdPage() {
     endDate: ''
   });
   const [currentImage, setCurrentImage] = useState('');
+  const [newImagePreview, setNewImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -99,6 +100,19 @@ export default function EditAdPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      
+      reader.onloadend = () => {
+        setNewImagePreview(reader.result as string);
+      };
+      
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -118,6 +132,25 @@ export default function EditAdPage() {
       const file = fileInputRef.current?.files?.[0];
       if (file && file.size > 0) {
         fd.append('img', file);
+        
+        // Delete old image if new one is uploaded
+        if (currentImage) {
+          try {
+            const response = await fetch(`/api/ads/delete-image`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ imagePath: currentImage }),
+            });
+            
+            if (!response.ok) {
+              console.error('Failed to delete old image');
+            }
+          } catch (error) {
+            console.error('Error deleting old image:', error);
+          }
+        }
       }
 
       const response = await fetch(`/api/ads/${adId}`, {
@@ -287,8 +320,19 @@ export default function EditAdPage() {
               ref={fileInputRef}
               name="img"
               accept="image/*"
+              onChange={handleImageChange}
               className="w-full px-3 py-2 border border-gray-300 rounded"
             />
+            {newImagePreview && (
+              <div className="mt-2">
+                <p className="text-sm text-gray-500 mb-1">New Image Preview:</p>
+                <img
+                  src={newImagePreview}
+                  alt="New ad preview"
+                  className="w-32 h-32 object-contain border rounded"
+                />
+              </div>
+            )}
           </div>
 
           <div className="md:col-span-2 flex justify-end mt-4">

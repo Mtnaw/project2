@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import type { Ad } from '@/app/data/mockAds';
 
 interface AdCardProps {
@@ -10,6 +11,7 @@ interface AdCardProps {
 }
 
 export default function AdCard({ ad, hideCategory }: AdCardProps) {
+  const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -50,12 +52,13 @@ export default function AdCard({ ad, hideCategory }: AdCardProps) {
                         method: 'DELETE',
                       });
                       if (response.ok) {
-                        window.location.reload();
+                        router.refresh(); // Refresh client-side without full reload
                       } else {
-                        alert('Failed to delete ad');
+                        const errorData = await response.json();
+                        alert(`Failed to delete ad: ${errorData.error || 'Unknown error'}`);
                       }
                     } catch (error) {
-                      alert('Error deleting ad');
+                      alert('Network error deleting ad');
                     }
                     setShowMenu(false);
                   }

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import LogoutButton from "./LogoutButton";
 import { useSession } from "next-auth/react";
 import { useSidebar } from "./SidebarContext";
+import { useState, useEffect } from "react";
 
 export default function NavBar() {
   const { data: session } = useSession();
@@ -13,6 +14,12 @@ export default function NavBar() {
   const isAdmin = session?.user?.role === "admin";
   const isHomePage = pathname === "/";
   const { toggleSidebar } = useSidebar();
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('profileImage');
+    setProfileImage(saved);
+  }, []);
 
   return (
     <nav className="flex justify-between items-center py-4 h-16 bg-white shadow-lg" style={{ backgroundImage: 'url(/uploads/bright-yellow-background-45loowtl2hjgu863.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
@@ -47,7 +54,15 @@ export default function NavBar() {
             className="text-base w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 hover:bg-blue-200 transition-colors"
             title="Profile"
           >
-            O
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="Profile"
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            ) : (
+              'O'
+            )}
           </button>
         )}
       </div>

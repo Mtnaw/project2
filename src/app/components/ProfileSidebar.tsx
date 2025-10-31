@@ -153,6 +153,16 @@ export default function ProfileSidebar({ isOpen = true }: { isOpen?: boolean }) 
     }
   };
 
+  const handleDelete = () => {
+    localStorage.removeItem('profileImage');
+    setUserProfile(prev => ({ ...prev, image: '' }));
+    setProfileImage(undefined);
+    setFileInput(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const openModal = () => {
     setFormData({
       name: userProfile.name,
@@ -179,11 +189,13 @@ export default function ProfileSidebar({ isOpen = true }: { isOpen?: boolean }) 
               alt="Profile"
               className="w-24 h-24 rounded-full object-cover mb-4 border-2 border-blue-500"
             />
-          ) : (
-            <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 mb-2">
-              {initials}
-            </div>
-          )}
+           ) : (
+             <img
+               src="/uploads/freebg11.jpg"
+               alt="Profile"
+               className="w-16 h-16 rounded-full object-cover mb-2 border-2 border-blue-500"
+             />
+           )}
            <p className="text-sm font-medium text-gray-700 mb-1">{formData.name}</p>
          </div>
 
@@ -234,10 +246,10 @@ export default function ProfileSidebar({ isOpen = true }: { isOpen?: boolean }) 
               <label htmlFor="profile-pic" className="text-blue-600 underline cursor-pointer mb-2">
                 Choose from gallery
               </label>
-              <div className="flex space-x-4 text-sm">
-                <a href="#" className="text-blue-600 underline">Change profile picture</a>
-                <a href="#" className="text-red-600 underline">Delete</a>
-              </div>
+               <div className="flex space-x-4 text-sm">
+                 <a href="#" onClick={() => fileInputRef.current?.click()} className="text-blue-600 underline cursor-pointer">Change profile picture</a>
+                 <a href="#" onClick={handleDelete} className="text-red-600 underline cursor-pointer">Delete</a>
+               </div>
             </div>
 
             {/* Form Fields */}

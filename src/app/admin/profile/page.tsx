@@ -52,12 +52,6 @@ export default function AdminProfilePage() {
               type="button"
               className="text-blue-600 underline text-sm hover:no-underline"
             >
-              Change profile pic
-            </button>
-            <button
-              type="button"
-              className="text-blue-600 underline text-sm hover:no-underline"
-            >
               Delete
             </button>
           </div>
