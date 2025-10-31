@@ -29,7 +29,7 @@ export default async function AdDetailPage({ params }: { params: { id: string } 
            )}
          </div>
         <div className="md:w-2/3">
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-4 mb-6 py-6">
             <div>
               <h3 className="font-semibold">Category</h3>
               <p>{ad.category}</p>

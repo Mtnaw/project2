@@ -89,6 +89,20 @@ export default function Home() {
     filterAds();
   }, [selectedCategory, searchQuery, filterAds]);
 
+  // Prevent scrolling when sidebars are open
+  useEffect(() => {
+    if (showCategories || isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showCategories, isSidebarOpen]);
+
   if (loading) {
     return <div>Loading...</div>;
   }

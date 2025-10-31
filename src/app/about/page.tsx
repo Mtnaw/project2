@@ -10,6 +10,20 @@ export default function AboutPage() {
   useEffect(() => {
     closeSidebar();
   }, []);
+
+  // Prevent scrolling when sidebar is open
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isSidebarOpen]);
   return (
     <div className="flex gap-6 p-6">
       <main className={`flex-1 max-w-8xl text-center transition-all duration-300 ${isSidebarOpen ? 'lg:mr-64' : ''}`}>
