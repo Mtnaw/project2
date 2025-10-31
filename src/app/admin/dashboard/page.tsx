@@ -1,0 +1,139 @@
+'use client';
+
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import AddAdSection from "@/app/components/AddAdSection";
+import AdCard from "@/app/components/AdCard";
+import ProfileSidebar from "@/app/components/ProfileSidebar";
+import { useSidebar } from "@/app/components/SidebarContext";
+
+import type { Ad } from "@/app/data/mockAds";
+
+function DashboardContent() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [ads, setAds] = useState<Ad[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { isSidebarOpen, closeSidebar } = useSidebar();
+
+  useEffect(() => {
+    closeSidebar();
+    if (status === "loading") return;
+
+    if (!session || session.user?.role !== "admin") {
+      router.push("/admin/signin");
+      return;
+    }
+
+    // Fetch ads data
+    fetch('/api/ads')
+      .then(res => res.json())
+      .then(data => {
+        setAds(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching ads:', error);
+        setLoading(false);
+      });
+  }, [session, status, router]);
+
+  if (status === "loading" || loading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
+
+  if (!session || session.user?.role !== "admin") {
+    return null;
+  }
+
+  const totalViews = ads.reduce((sum, ad) => sum + ad.views, 0);
+  const totalPosts = ads.length;
+  const averageVisitRate = totalPosts > 0 ? Math.round(totalViews / totalPosts) : 0;
+
+  const clientsMap = new Map();
+  ads.forEach(ad => {
+    const existing = clientsMap.get(ad.email);
+    if (!existing || new Date(ad.endDate) > new Date(existing.lastVisit)) {
+      clientsMap.set(ad.email, { name: ad.supplierName, email: ad.email, lastVisit: ad.endDate });
+    }
+  });
+  const clients = Array.from(clientsMap.values()).sort((a, b) => new Date(b.lastVisit).getTime() - new Date(a.lastVisit).getTime());
+
+  return (
+    <div className="flex gap-6 p-6">
+      <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'lg:mr-64' : ''}`}>
+        <div className="min-h-screen bg-white-100">
+          <div className="max-w-6xl mx-auto p-8">
+        {/* Stats Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Average Views per Post</h3>
+            <p className="text-3xl font-bold text-blue-600">{averageVisitRate}</p>
+            <p className="text-sm text-gray-500">Average views per post</p>
+          </div>
+          <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Total Posts</h3>
+            <p className="text-3xl font-bold text-green-600">{totalPosts}</p>
+            <p className="text-sm text-gray-500">Active advertisements</p>
+          </div>
+          <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Total Clients</h3>
+            <p className="text-3xl font-bold text-purple-600">{clients.length}</p>
+            <p className="text-sm text-gray-500">Registered users</p>
+          </div>
+        </div>
+      
+        {/* Client History */}
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm mb-8">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900">Client History</h2>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Visit</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {clients.map((client, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{client.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{client.email}</td>
+                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(client.lastVisit).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      
+        {/* Post History */}
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm mb-8">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900">Post History</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+            {ads.length > 0 ? (
+              ads.map((ad) => <AdCard key={ad.id} ad={ad} />)
+            ) : (
+              <p className="text-gray-500">No posts available.</p>
+            )}
+          </div>
+        </div>
+      
+          <AddAdSection />
+          </div>
+        </div>
+      </main>
+      <ProfileSidebar isOpen={isSidebarOpen} />
+    </div>
+  );
+}
+
+export default function AdminDashboard() {
+  return <DashboardContent />;
+}
