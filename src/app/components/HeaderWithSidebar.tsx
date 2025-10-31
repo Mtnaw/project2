@@ -51,7 +51,7 @@ export default function HeaderWithSidebar(props: any) {
               setShowCategories(false);
               window.location.href = '/';
             }}
-            className="block w-full text-left px-4 py-2 rounded-md bg-blue-600 text-white"
+            className="block w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-300 text-gray-700"
           >
             All Categories
           </button>
@@ -62,7 +62,7 @@ export default function HeaderWithSidebar(props: any) {
                 setShowCategories(false);
                 window.location.href = `/?category=${category}`;
               }}
-              className="block w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700"
+              className="block w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-300 text-gray-700"
             >
               {category}
             </button>

@@ -47,7 +47,7 @@ export default function NavBar() {
             className="text-base w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 hover:bg-blue-200 transition-colors"
             title="Profile"
           >
-            A
+            O
           </button>
         )}
       </div>

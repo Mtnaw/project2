@@ -117,15 +117,15 @@ export default function Home() {
           {/* Ads Section */}
           <div className={`grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 transition-all duration-300 ${showCategories ? 'lg:ml-64' : ''} ${isSidebarOpen ? 'lg:mr-64' : ''}`}>
             {filteredAds.slice(0, Infinity).map((ad, index) => (
-              <div key={`${ad.id}-${index}`} className="border border-black-600 p-4 flex flex-col relative mb-4">
+              <div key={`${ad.id}-${index}`} className="border border-black-600 hover:bg-gray-200 bg-white-200 p-4 flex flex-col relative mb-4">
                 <div className="relative mb-4">
                   <img
                     src={ad.img}
                     alt={ad.title}
-                    className="w-full h-48 border border-blue-600 object-cover"
+                    className="w-full h-48 border border-black-600 object-cover"
                   />
                 </div>
-                <div className="border border-blue-600 p-4 mb-4 min-h-20 flex flex-col items-center justify-center bg-gray-50">
+                <div className="border hover:text-blue-800 border-black-600 bg-blue-200 p-4 mb-4 min-h-20 flex flex-col items-center justify-center bg-gray-50">
                   <p className="text-center text-sm font-semibold">{ad.title}</p>
                 </div>
                 <Link
