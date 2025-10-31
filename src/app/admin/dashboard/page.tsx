@@ -54,8 +54,9 @@ function DashboardContent() {
   const clientsMap = new Map();
   ads.forEach(ad => {
     const existing = clientsMap.get(ad.email);
-    if (!existing || new Date(ad.endDate) > new Date(existing.lastVisit)) {
-      clientsMap.set(ad.email, { name: ad.supplierName, email: ad.email, lastVisit: ad.endDate });
+    const adDate = ad.history?.[0]?.date || ad.endDate;
+    if (!existing || new Date(adDate) > new Date(existing.lastVisit)) {
+      clientsMap.set(ad.email, { name: ad.supplierName, email: ad.email, lastVisit: adDate });
     }
   });
   const clients = Array.from(clientsMap.values()).sort((a, b) => new Date(b.lastVisit).getTime() - new Date(a.lastVisit).getTime());

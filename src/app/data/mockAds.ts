@@ -13,6 +13,7 @@ export type Ad = {
   endDate: string;
   views: number;
   approved: boolean;
+  history?: { date: string; action: string; user: string }[];
 };
 
 export const mockAds: Ad[] = [

@@ -61,13 +61,14 @@ export default function ProfileSidebar({ isOpen = true }: { isOpen?: boolean }) 
 
   const clientsMap = new Map();
   ads.forEach((ad: any) => {
+    const adDate = ad.history?.[0]?.date || ad.endDate;
     if (!clientsMap.has(ad.email)) {
-      clientsMap.set(ad.email, { name: ad.supplierName, email: ad.email, lastVisit: ad.endDate, totalPosts: 1 });
+      clientsMap.set(ad.email, { name: ad.supplierName, email: ad.email, lastVisit: adDate, totalPosts: 1 });
     } else {
       const client = clientsMap.get(ad.email);
       client.totalPosts += 1;
-      if (new Date(ad.endDate) > new Date(client.lastVisit)) {
-        client.lastVisit = ad.endDate;
+      if (new Date(adDate) > new Date(client.lastVisit)) {
+        client.lastVisit = adDate;
       }
     }
   });

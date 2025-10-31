@@ -31,13 +31,10 @@ export async function GET(request: Request) {
       : NextResponse.json({ error: 'Ad not found' }, { status: 404 });
   }
   
-  // For listing, don't include admin-only fields and only show approved ads
-  const publicAds = ads
+  // For listing, include all fields for now (admin access)
+  const allAds = ads
     // Removed approval filter to show all ads immediately
-    .map(ad => {
-      const { supplierName, email, startDate, endDate, ...publicData } = ad;
-      return publicData;
-    });
-  
-  return NextResponse.json(publicAds);
+    .filter(ad => ad.approved); // Keep approved filter
+
+  return NextResponse.json(allAds);
 }
