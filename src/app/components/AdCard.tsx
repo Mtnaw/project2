@@ -1,18 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Ad } from '@/app/data/mockAds';
 
 interface AdCardProps {
   ad: Ad;
   hideCategory?: boolean;
+  isMenuOpen?: boolean;
+  onMenuToggle?: () => void;
+  onMenuClose?: () => void;
 }
 
-export default function AdCard({ ad, hideCategory }: AdCardProps) {
+export default function AdCard({ ad, hideCategory, isMenuOpen = false, onMenuToggle, onMenuClose }: AdCardProps) {
   const router = useRouter();
-  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm relative">
@@ -29,18 +30,18 @@ export default function AdCard({ ad, hideCategory }: AdCardProps) {
           </div>
         </div>
         <div className="relative">
-          <button
-            onClick={() => setShowMenu(!showMenu)}
+           <button
+            onClick={onMenuToggle}
             className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-gray-700 focus:outline-none"
           >
-            ⋯
+...
           </button>
-          {showMenu && (
+          {isMenuOpen && (
             <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-10 min-w-[80px]">
-              <Link
+               <Link
                 href={`/admin/ads/${ad.id}/edit`}
                 className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                onClick={() => setShowMenu(false)}
+                onClick={onMenuClose}
               >
                 Edit
               </Link>
@@ -60,7 +61,7 @@ export default function AdCard({ ad, hideCategory }: AdCardProps) {
                     } catch (error) {
                       alert('Network error deleting ad');
                     }
-                    setShowMenu(false);
+                     onMenuClose?.();
                   }
                 }}
                 className="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50"
