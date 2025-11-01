@@ -341,11 +341,18 @@ export default function EditAdPage() {
             />
           </div>
 
-          <div className="md:col-span-2 flex justify-end mt-4">
+          <div className="md:col-span-2 flex justify-between mt-4">
+            <button
+              type="button"
+              onClick={() => router.push('/admin/dashboard')}
+              className="bg-blue-400 text-white py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 disabled:bg-gray-400"
+              className="bg-blue-400 text-white py-2 px-6 rounded hover:bg-blue-600 disabled:bg-gray-400"
             >
               {isSubmitting ? 'Updating...' : 'Update Ad'}
             </button>
