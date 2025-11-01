@@ -182,22 +182,20 @@ export default function ProfileSidebar({ isOpen = true }: { isOpen?: boolean }) 
       {/* Profile Sidebar */}
       {isOpen && (
         <aside className="fixed right-0 top-16 h-full w-64 bg-white shadow-lg z-50 p-4 overflow-y-auto transform transition-transform duration-300 ease-in-out translate-x-0" style={{ backgroundRepeat: 'no-repeat' }}>
-        <div className="mb-6 flex flex-col items-center">
-          {userProfile.image ? (
-            <img
-              src={userProfile.image}
-              alt="Profile"
-              className="w-24 h-24 rounded-full object-cover mb-4 border-2 border-blue-500"
-            />
-           ) : (
-             <img
-               src="/uploads/freebg11.jpg"
-               alt="Profile"
-               className="w-16 h-16 rounded-full object-cover mb-2 border-2 border-blue-500"
-             />
-           )}
-           <p className="text-sm font-medium text-gray-700 mb-1">{formData.name}</p>
-         </div>
+          <div className="mb-6 flex flex-col items-center">
+            {userProfile.image ? (
+              <img
+                src={userProfile.image}
+                alt="Profile"
+                className="w-24 h-24 rounded-full object-cover mb-4 border-2 border-blue-500"
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mb-4 border-2 border-blue-500">
+                {initials}
+              </div>
+            )}
+            <p className="text-sm font-medium text-gray-700 mb-1">{formData.name}</p>
+          </div>
 
          <button
           onClick={openModal}
