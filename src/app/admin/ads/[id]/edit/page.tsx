@@ -50,6 +50,10 @@ export default function EditAdPage() {
   });
   const [currentImage, setCurrentImage] = useState('');
   const [newImagePreview, setNewImagePreview] = useState<string | null>(null);
+  const [additionalFiles, setAdditionalFiles] = useState<File[]>([]);
+  const [additionalPreviews, setAdditionalPreviews] = useState<string[]>([]);
+  const [existingAdditionalImages, setExistingAdditionalImages] = useState<string[]>([]);
+  const [existingAdditionalVideos, setExistingAdditionalVideos] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -96,6 +100,8 @@ export default function EditAdPage() {
             endDate: ad.endDate
           });
           setCurrentImage(ad.img);
+          setExistingAdditionalImages(ad.additionalImages || []);
+          setExistingAdditionalVideos(ad.additionalVideos || []);
         } else {
           console.error('Failed to fetch ad');
           router.push('/admin/dashboard');
@@ -120,12 +126,45 @@ export default function EditAdPage() {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const reader = new FileReader();
-      
+
       reader.onloadend = () => {
         setNewImagePreview(reader.result as string);
       };
-      
+
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAdditionalFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const newPreviews: string[] = [];
+
+    files.forEach(file => {
+      const url = URL.createObjectURL(file);
+      newPreviews.push(url);
+    });
+
+    setAdditionalFiles(prev => [...prev, ...files]);
+    setAdditionalPreviews(prev => [...prev, ...newPreviews]);
+    e.target.value = ''; // Reset input to allow re-selection
+  };
+
+  const removeAdditionalFile = (index: number) => {
+    const fileToRemove = additionalFiles[index];
+    const previewToRemove = additionalPreviews[index];
+
+    // Revoke the object URL to free memory
+    URL.revokeObjectURL(previewToRemove);
+
+    setAdditionalFiles(prev => prev.filter((_, i) => i !== index));
+    setAdditionalPreviews(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const removeExistingFile = (type: 'image' | 'video', index: number) => {
+    if (type === 'image') {
+      setExistingAdditionalImages(prev => prev.filter((_, i) => i !== index));
+    } else {
+      setExistingAdditionalVideos(prev => prev.filter((_, i) => i !== index));
     }
   };
 
@@ -145,29 +184,42 @@ export default function EditAdPage() {
       fd.append('startDate', formData.startDate || '');
       fd.append('endDate', formData.endDate || '');
 
-      const file = fileInputRef.current?.files?.[0];
-      if (file && file.size > 0) {
-        fd.append('img', file);
-        
-        // Delete old image if new one is uploaded
-        if (currentImage) {
-          try {
-            const response = await fetch(`/api/ads/delete-image`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ imagePath: currentImage }),
-            });
-            
-            if (!response.ok) {
-              console.error('Failed to delete old image');
-            }
-          } catch (error) {
-            console.error('Error deleting old image:', error);
-          }
-        }
-      }
+       const file = fileInputRef.current?.files?.[0];
+       if (file && file.size > 0) {
+         fd.append('img', file);
+
+         // Delete old image if new one is uploaded
+         if (currentImage) {
+           try {
+             const response = await fetch(`/api/ads/delete-image`, {
+               method: 'POST',
+               headers: {
+                 'Content-Type': 'application/json',
+               },
+               body: JSON.stringify({ imagePath: currentImage }),
+             });
+
+             if (!response.ok) {
+               console.error('Failed to delete old image');
+             }
+           } catch (error) {
+             console.error('Error deleting old image:', error);
+           }
+         }
+       }
+
+       // Append additional files
+       additionalFiles.forEach((additionalFile) => {
+         fd.append('additionalFiles', additionalFile);
+       });
+
+       // Include existing additional files that weren't removed
+       existingAdditionalImages.forEach((image) => {
+         fd.append('existingAdditionalImages', image);
+       });
+       existingAdditionalVideos.forEach((video) => {
+         fd.append('existingAdditionalVideos', video);
+       });
 
       const response = await fetch(`/api/ads/${adId}`, {
         method: 'PUT',
@@ -356,9 +408,93 @@ export default function EditAdPage() {
             >
               {isSubmitting ? 'Updating...' : 'Update Ad'}
             </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-}
+           </div>
+
+           {/* Additional Images and Videos Management */}
+           <div className="mb-4 md:col-span-2">
+             <label className="block text-sm font-medium text-gray-700 mb-2">Additional Images & Videos</label>
+
+             {/* Existing files */}
+             <div className="flex flex-wrap gap-2 mb-4">
+               {existingAdditionalImages.map((image, index) => (
+                 <div key={`existing-image-${index}`} className="relative">
+                   <img
+                     src={image}
+                     alt={`Existing additional image ${index + 1}`}
+                     className="w-20 h-20 object-cover rounded border"
+                   />
+                   <button
+                     type="button"
+                     onClick={() => removeExistingFile('image', index)}
+                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                   >
+                     ×
+                   </button>
+                 </div>
+               ))}
+               {existingAdditionalVideos.map((video, index) => (
+                 <div key={`existing-video-${index}`} className="relative">
+                   <video
+                     src={video}
+                     className="w-20 h-20 object-cover rounded border"
+                     muted
+                   />
+                   <button
+                     type="button"
+                     onClick={() => removeExistingFile('video', index)}
+                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                   >
+                     ×
+                   </button>
+                 </div>
+               ))}
+             </div>
+
+             {/* New files to upload */}
+             <div className="flex flex-wrap gap-2 mb-2">
+               {additionalPreviews.map((preview, index) => (
+                 <div key={`new-${index}`} className="relative">
+                   {additionalFiles[index]?.type.startsWith('video/') ? (
+                     <video
+                       src={preview}
+                       className="w-20 h-20 object-cover rounded border"
+                       muted
+                     />
+                   ) : (
+                     <img
+                       src={preview}
+                       alt={`New additional ${index + 1}`}
+                       className="w-20 h-20 object-cover rounded border"
+                     />
+                   )}
+                   <button
+                     type="button"
+                     onClick={() => removeAdditionalFile(index)}
+                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                   >
+                     ×
+                   </button>
+                 </div>
+               ))}
+               <div
+                 onClick={() => document.getElementById('additional-file-input')?.click()}
+                 className="w-20 h-20 rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 flex items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
+               >
+                 <span className="text-gray-500 text-2xl">+</span>
+               </div>
+             </div>
+             <input
+               id="additional-file-input"
+               type="file"
+               onChange={handleAdditionalFileSelect}
+               accept="image/*,video/*"
+               multiple
+               style={{ display: 'none' }}
+             />
+             <p className="text-xs text-gray-500">Upload additional images and videos. Click × to remove files.</p>
+           </div>
+         </form>
+       </div>
+     </div>
+   );
+ }

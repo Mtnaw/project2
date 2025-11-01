@@ -4,6 +4,8 @@ export type Ad = {
   description: string;
   img: string;
   video?: string;
+  additionalImages?: string[];
+  additionalVideos?: string[];
   category: string;
   price: number;
   contact: string;

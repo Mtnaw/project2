@@ -31,7 +31,10 @@ export default function AddAdSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [additionalFiles, setAdditionalFiles] = useState<File[]>([]);
+  const [additionalPreviews, setAdditionalPreviews] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const additionalFileInputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
   const { data: session, status } = useSession() as { data: Session | null; status: string };
@@ -51,6 +54,10 @@ export default function AddAdSection() {
       URL.revokeObjectURL(previewUrl);
       setPreviewUrl(null);
     }
+    // Clean up additional files
+    additionalPreviews.forEach(url => URL.revokeObjectURL(url));
+    setAdditionalFiles([]);
+    setAdditionalPreviews([]);
     setShowModal(false);
   };
 
@@ -73,6 +80,35 @@ export default function AddAdSection() {
     }
   };
 
+  const handleAdditionalFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const newPreviews: string[] = [];
+
+    files.forEach(file => {
+      const url = URL.createObjectURL(file);
+      newPreviews.push(url);
+    });
+
+    setAdditionalFiles(prev => [...prev, ...files]);
+    setAdditionalPreviews(prev => [...prev, ...newPreviews]);
+    e.target.value = ''; // Reset input to allow re-selection
+  };
+
+  const removeAdditionalFile = (index: number) => {
+    const fileToRemove = additionalFiles[index];
+    const previewToRemove = additionalPreviews[index];
+
+    // Revoke the object URL to free memory
+    URL.revokeObjectURL(previewToRemove);
+
+    setAdditionalFiles(prev => prev.filter((_, i) => i !== index));
+    setAdditionalPreviews(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const triggerAdditionalFileInput = () => {
+    additionalFileInputRef.current?.click();
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     if (name === 'price') {
@@ -91,12 +127,17 @@ export default function AddAdSection() {
       Object.keys(formData).forEach(key => {
         submitData.append(key, String(formData[key as keyof typeof formData]));
       });
-      // Append file if selected (overrides the string img)
-      if (!selectedFile) {
-        alert('Please select an image');
-        return;
-      }
-      submitData.append('img', selectedFile);
+       // Append main file if selected (overrides the string img)
+       if (!selectedFile) {
+         alert('Please select a main image');
+         return;
+       }
+       submitData.append('img', selectedFile);
+
+       // Append additional files
+       additionalFiles.forEach((file, index) => {
+         submitData.append('additionalFiles', file);
+       });
 
       const response = await fetch('/api/ads/create', {
         method: 'POST',
@@ -180,14 +221,60 @@ export default function AddAdSection() {
                         <span className="text-gray-500 text-sm">Upload Photo</span>
                       </div>
                     )}
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={handleImageSelect}
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                    />
-                  </div>
+                     <input
+                       type="file"
+                       ref={fileInputRef}
+                       onChange={handleImageSelect}
+                       accept="image/*"
+                       style={{ display: 'none' }}
+                     />
+                   </div>
+
+                   {/* Additional Images and Videos Upload */}
+                   <div className="mb-4">
+                     <label className="block text-sm font-medium text-gray-700 mb-2">Additional Images & Videos (Optional)</label>
+                     <div className="flex flex-wrap gap-2 mb-2">
+                       {additionalPreviews.map((preview, index) => (
+                         <div key={index} className="relative">
+                           {additionalFiles[index]?.type.startsWith('video/') ? (
+                             <video
+                               src={preview}
+                               className="w-20 h-20 object-cover rounded border"
+                               muted
+                             />
+                           ) : (
+                             <img
+                               src={preview}
+                               alt={`Additional ${index + 1}`}
+                               className="w-20 h-20 object-cover rounded border"
+                             />
+                           )}
+                           <button
+                             type="button"
+                             onClick={() => removeAdditionalFile(index)}
+                             className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                           >
+                             ×
+                           </button>
+                         </div>
+                       ))}
+                       <div
+                         onClick={triggerAdditionalFileInput}
+                         className="w-20 h-20 rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 flex items-center justify-center cursor-pointer hover:border-blue-500 transition-colors"
+                       >
+                         <span className="text-gray-500 text-2xl">+</span>
+                       </div>
+                     </div>
+                     <input
+                       type="file"
+                       ref={additionalFileInputRef}
+                       onChange={handleAdditionalFileSelect}
+                       accept="image/*,video/*"
+                       multiple
+                       style={{ display: 'none' }}
+                     />
+                     <p className="text-xs text-gray-500">You can upload multiple images and videos</p>
+                   </div>
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Supplier Name</label>
                     <input

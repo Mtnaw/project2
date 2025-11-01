@@ -39,6 +39,36 @@ async function updateAd(id: string, formData: FormData) {
       imgPath = `/uploads/${fileName}`;
     }
 
+    // Handle additional files
+    let additionalImages: string[] = [];
+    let additionalVideos: string[] = [];
+    const additionalFiles = formData.getAll('additionalFiles') as File[];
+    const existingAdditionalImages = formData.getAll('existingAdditionalImages') as string[];
+    const existingAdditionalVideos = formData.getAll('existingAdditionalVideos') as string[];
+
+    // Add existing files that weren't removed
+    additionalImages.push(...existingAdditionalImages);
+    additionalVideos.push(...existingAdditionalVideos);
+
+    // Add new files
+    if (additionalFiles && additionalFiles.length > 0) {
+      for (const additionalFile of additionalFiles) {
+        if (additionalFile && additionalFile.size > 0) {
+          const fileName = `ad-additional-${Date.now()}-${Math.random()}-${additionalFile.name}`;
+          const uploadPath = path.join(process.cwd(), 'public/uploads', fileName);
+          const buffer = Buffer.from(await additionalFile.arrayBuffer());
+          await fs.writeFile(uploadPath, buffer);
+
+          const filePath = `/uploads/${fileName}`;
+          if (additionalFile.type.startsWith('video/')) {
+            additionalVideos.push(filePath);
+          } else {
+            additionalImages.push(filePath);
+          }
+        }
+      }
+    }
+
     // Update ad data
     ads[adIndex] = {
       ...ad,
@@ -51,7 +81,9 @@ async function updateAd(id: string, formData: FormData) {
       email: formData.get('email') || ad.email,
       startDate: formData.get('startDate') || ad.startDate,
       endDate: formData.get('endDate') || ad.endDate,
-      img: imgPath
+      img: imgPath,
+      additionalImages: additionalImages.length > 0 ? additionalImages : undefined,
+      additionalVideos: additionalVideos.length > 0 ? additionalVideos : undefined
     };
 
     await fs.writeFile(adsFilePath, JSON.stringify(ads, null, 2));

@@ -55,16 +55,16 @@ export async function POST(request: Request) {
     if (file && file.size > 0) {
       const uploadsDir = path.join(process.cwd(), 'public/uploads');
       await fs.mkdir(uploadsDir, { recursive: true });
-      
+
       const timestamp = Date.now();
       const ext = path.extname(file.name);
       const filename = `ad-${timestamp}${ext}`;
       const filepath = path.join(uploadsDir, filename);
-      
+
       const buffer = Buffer.from(await file.arrayBuffer());
       await fs.writeFile(filepath, buffer);
       console.log(`Image saved to: ${filepath}`);
-      
+
       imgPath = `/uploads/${filename}`;
       console.log(`Image path set to: ${imgPath}`);
     } else {
@@ -73,6 +73,33 @@ export async function POST(request: Request) {
         { error: 'Image is required' },
         { status: 400 }
       );
+    }
+
+    // Handle additional files
+    const additionalImages: string[] = [];
+    const additionalVideos: string[] = [];
+    const additionalFiles = formData.getAll('additionalFiles') as File[];
+
+    for (const additionalFile of additionalFiles) {
+      if (additionalFile && additionalFile.size > 0) {
+        const uploadsDir = path.join(process.cwd(), 'public/uploads');
+        await fs.mkdir(uploadsDir, { recursive: true });
+
+        const timestamp = Date.now() + Math.random(); // Add randomness to avoid conflicts
+        const ext = path.extname(additionalFile.name);
+        const filename = `ad-additional-${timestamp}${ext}`;
+        const filepath = path.join(uploadsDir, filename);
+
+        const buffer = Buffer.from(await additionalFile.arrayBuffer());
+        await fs.writeFile(filepath, buffer);
+
+        const filePath = `/uploads/${filename}`;
+        if (additionalFile.type.startsWith('video/')) {
+          additionalVideos.push(filePath);
+        } else {
+          additionalImages.push(filePath);
+        }
+      }
     }
     
     const ads = await readAds();
@@ -94,7 +121,9 @@ export async function POST(request: Request) {
       startDate,
       endDate,
       views: 0,
-      approved: true
+      approved: true,
+      additionalImages: additionalImages.length > 0 ? additionalImages : undefined,
+      additionalVideos: additionalVideos.length > 0 ? additionalVideos : undefined
     };
     
     ads.push(newAd);

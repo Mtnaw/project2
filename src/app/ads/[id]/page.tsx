@@ -52,7 +52,36 @@ export default async function AdDetailPage({ params }: { params: { id: string } 
           </div>
         </div>
       </div>
-      <p className="text-gray-700 mb-4 px-2 py-4">{ad.description}</p>
-    </div>
-  );
-}
+       <p className="text-gray-700 mb-4 px-2 py-4">{ad.description}</p>
+
+       {/* Additional Images and Videos */}
+       {(ad.additionalImages && ad.additionalImages.length > 0) || (ad.additionalVideos && ad.additionalVideos.length > 0) ? (
+         <div className="mt-8">
+           <h2 className="text-2xl font-bold mb-4">Gallery</h2>
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+             {ad.additionalImages?.map((image, index) => (
+               <div key={`image-${index}`} className="relative">
+                 <img
+                   src={image}
+                   alt={`Additional image ${index + 1}`}
+                   className="w-full h-48 object-cover rounded-lg border-2 border-gray-300"
+                 />
+               </div>
+             ))}
+             {ad.additionalVideos?.map((video, index) => (
+               <div key={`video-${index}`} className="relative">
+                 <video
+                   controls
+                   className="w-full h-48 object-cover rounded-lg border-2 border-gray-300"
+                 >
+                   <source src={video} type="video/mp4" />
+                   Your browser does not support the video tag.
+                 </video>
+               </div>
+             ))}
+           </div>
+         </div>
+       ) : null}
+     </div>
+   );
+ }
