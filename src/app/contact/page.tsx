@@ -10,6 +10,20 @@ export default function ContactPage() {
   useEffect(() => {
       closeSidebar();
   }, []);
+
+  // Prevent scrolling when sidebar is open
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isSidebarOpen]);
   return (
     <div className="flex gap-6 px-6 pb-6">
       <main className={`flex-1 max-w-8xl flex flex-col items-center transition-all duration-300 ${isSidebarOpen ? 'lg:mr-64' : ''}`}>
