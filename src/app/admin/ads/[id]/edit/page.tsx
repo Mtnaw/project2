@@ -323,16 +323,6 @@ export default function EditAdPage() {
               onChange={handleImageChange}
               className="w-full px-3 py-2 border border-gray-300 rounded"
             />
-            {newImagePreview && (
-              <div className="mt-2">
-                <p className="text-sm text-gray-500 mb-1">New Image Preview:</p>
-                <img
-                  src={newImagePreview}
-                  alt="New ad preview"
-                  className="w-32 h-32 object-contain border rounded"
-                />
-              </div>
-            )}
           </div>
 
           <div className="md:col-span-2 flex justify-end mt-4">

@@ -27,7 +27,7 @@ export default async function RootLayout({
         <Providers session={session}>
           <SidebarProvider>
             <NavBar />
-            <main className="w-full">{children}</main>
+            <main className="w-full pt-16">{children}</main>
           </SidebarProvider>
         </Providers>
       </body>

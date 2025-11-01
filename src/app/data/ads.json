@@ -95,7 +95,7 @@
     "category": "Decoration",
     "price": 600,
     "contact": "gam@email.com",
-    "supplierName": "Gam",
+    "supplierName": "Gamn",
     "email": "gam@email.com",
     "startDate": "2025-10-05",
     "endDate": "2025-10-30",
@@ -106,28 +106,6 @@
         "date": "2025-10-05",
         "action": "Created",
         "user": "gam@email.com"
-      }
-    ]
-  },
-  {
-    "id": "7",
-    "title": "Dj Service",
-    "description": "When you hear the word “DJ,” what comes to mind? Is it someone mixing beats at a club or spinning records at a wedding? A DJ, short for disc jockey, is much more than just a music player. DJs are artists, curators, and performers who use music to create memorable experiences. They have shaped modern music culture, influencing everything from parties to global music festivals.\r\n\r\nThis blog explores the question, “What is a DJ?” We’ll dive into their history, different types of DJs, their essential skills, and the tools they use to create magic. By the end of this guide, you’ll have a comprehensive understanding of what it truly means to be a DJ.\r\n\r\nThe Definition of a DJ\r\nA DJ, or disc jockey, is someone who plays and mixes pre-recorded music for an audience. DJs perform at clubs, radio stations, weddings, parties, and even on global stages.\r\n\r\nHere’s what defines a DJ:\r\n\r\nMusic Selection: DJs curate playlists to match the mood and energy of an event.\r\nMixing Skills: They blend tracks seamlessly to create a continuous flow of music.\r\nAudience Connection: DJs read the crowd and adapt their music to keep the energy alive.\r\nUnderstanding what a DJ does goes beyond playing songs—it’s about crafting an experience.",
-    "img": "/uploads/ad-1761746119813.jpg",
-    "category": "Home Keeping",
-    "price": 800,
-    "contact": "dd@email.com",
-    "supplierName": "Dj",
-    "email": "dd@email.com",
-    "startDate": "2025-10-01",
-    "endDate": "2025-10-10",
-    "views": 0,
-    "approved": true,
-    "history": [
-      {
-        "date": "2025-10-01",
-        "action": "Created",
-        "user": "dd@email.com"
       }
     ]
   },
@@ -152,5 +130,20 @@
         "user": "v@email.com"
       }
     ]
+  },
+  {
+    "id": "9",
+    "title": "JSP Service",
+    "description": "Ja MUN MUN MUN",
+    "img": "/uploads/ad-1761974286046.jpg",
+    "category": "Construction",
+    "price": 500,
+    "contact": "jsp@email.com",
+    "supplierName": "JSP",
+    "email": "jsp@email.com",
+    "startDate": "2025-11-01",
+    "endDate": "2025-11-20",
+    "views": 0,
+    "approved": true
   }
 ]
