@@ -1,4 +1,5 @@
 import { Ad } from '@/app/data/mockAds';
+import Link from 'next/link';
 
 export default async function AdDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -17,6 +18,14 @@ export default async function AdDetailPage({ params }: { params: { id: string } 
 
   return (
     <div className="max-w-full mx-auto p-10">
+      <div className="mb-6">
+        <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back 
+        </Link>
+      </div>
       <h1 className="text-3xl font-bold mb-4">{ad.title}</h1>
        <div className="flex flex-col md:flex-row gap-6">
          <div className="md:w-1/3">
