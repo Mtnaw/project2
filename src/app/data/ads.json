@@ -190,5 +190,49 @@
     "additionalVideos": [
       "/uploads/ad-additional-1762005222206.03.mp4"
     ]
+  },
+  {
+    "id": "12",
+    "title": "HUUU Service",
+    "description": "HUUUUUUUUUUUUUUUUUUU",
+    "img": "/uploads/ad-1762006851060.jpg",
+    "category": "Home Keeping",
+    "price": 400,
+    "contact": "hu@email.com",
+    "supplierName": "HUUU",
+    "email": "hu@email.com",
+    "startDate": "2025-10-30",
+    "endDate": "2025-11-01",
+    "views": 0,
+    "approved": true,
+    "additionalImages": [
+      "/uploads/ad-additional-1762006851066.4631.jpg",
+      "/uploads/ad-additional-1762006851074.2205.jpg",
+      "/uploads/ad-additional-1762006851079.2727.jpg",
+      "/uploads/ad-additional-1762006851082.1365.jpg"
+    ]
+  },
+  {
+    "id": "13",
+    "title": "Smile Service",
+    "description": "smile yourself",
+    "img": "/uploads/ad-1762006949355.jpg",
+    "category": "Decoration",
+    "price": 500,
+    "contact": "smile@email.com",
+    "supplierName": "Smile",
+    "email": "smile@email.com",
+    "startDate": "2025-10-29",
+    "endDate": "2025-11-02",
+    "views": 0,
+    "approved": true,
+    "additionalImages": [
+      "/uploads/ad-additional-1762006949361.2192.jpg",
+      "/uploads/ad-additional-1762006949375.371.jpg",
+      "/uploads/ad-additional-1762006949390.9492.jpg",
+      "/uploads/ad-additional-1762006949394.6995.jpg",
+      "/uploads/ad-additional-1762006949408.5303.jpg",
+      "/uploads/ad-additional-1762006949412.9817.jpg"
+    ]
   }
 ]
