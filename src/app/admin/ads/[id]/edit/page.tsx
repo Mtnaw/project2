@@ -60,6 +60,22 @@ export default function EditAdPage() {
     }
   }, [session, status, router]);
 
+  // Hide navbar on edit page
+  useEffect(() => {
+    const navbar = document.querySelector('nav');
+    if (navbar) {
+      navbar.style.display = 'none';
+    }
+
+    // Cleanup: show navbar when component unmounts
+    return () => {
+      const navbar = document.querySelector('nav');
+      if (navbar) {
+        navbar.style.display = '';
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (!adId) return;
 
@@ -175,8 +191,8 @@ export default function EditAdPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 pt-20">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-4xl">
         <h1 className="text-2xl font-bold mb-6 text-center">Edit Ad</h1>
         
         {currentImage && (
