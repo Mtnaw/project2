@@ -101,11 +101,11 @@ export default function AdDetailPage({ params }: { params: { id: string } }) {
       </div>
       <h1 className="text-3xl font-bold mb-4">{ad.title}</h1>
        <div className="flex flex-col md:flex-row gap-6">
-          <div className="md:w-1/3">
+          <div className="md:w-1/4">
             <img
               src={ad.img}
               alt={ad.title}
-              className="w-full h-64 object-cover rounded-xl border-2 border-gray-300 cursor-pointer hover:opacity-90 transition-opacity"
+              className="w-full h-64 object-cover rounded-2xl border-5 border-gray-300 cursor-pointer hover:opacity-90 transition-opacity"
               onClick={() => openLightbox(ad.img)}
             />
             {ad.video && (
@@ -136,7 +136,7 @@ export default function AdDetailPage({ params }: { params: { id: string } }) {
        {(ad.additionalImages && ad.additionalImages.length > 0) || (ad.additionalVideos && ad.additionalVideos.length > 0) ? (
          <div className="mt-8">
            <h2 className="text-2xl font-bold mb-4">Gallery</h2>
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
              {ad.additionalImages?.map((image, index) => (
                <div key={`image-${index}`} className="relative cursor-pointer group" onClick={() => openLightbox(image)}>
                  <img

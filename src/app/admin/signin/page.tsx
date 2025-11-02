@@ -54,7 +54,7 @@ export default function AdminSignInPage() {
               name="email"
               id="email"
               className="w-full px-3 py-2 border border-gray-300 rounded"
-              defaultValue="admin@example.com"
+              defaultValue=""
               required
               disabled={isLoading}
             />
@@ -69,7 +69,7 @@ export default function AdminSignInPage() {
                 name="password"
                 id="password"
                 className="w-full px-3 py-2 border border-gray-300 rounded pr-10"
-                defaultValue="adminpassword"
+                defaultValue=""
                 required
                 disabled={isLoading}
               />
