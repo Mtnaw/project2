@@ -18,7 +18,7 @@ export default function HeaderWithSidebar(props: any) {
 
   return (
     <div>
-       <header className={`flex justify-between items-center py-3 w-full bg-gray-100 ${isSidebarOpen ? 'lg:mr-64' : ''}`} style={{ backgroundImage: 'url(/uploads/freebg11.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
+       <header className={`flex justify-between items-center py-3 w-full bg-gray-100 ${isSidebarOpen ? 'lg:mr-64' : ''}`} style={{ backgroundImage: 'url(/uploads/1n.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
         <div className="flex items-center space-x-2 px-8">
           <button
             className="text-2xl"
@@ -30,7 +30,7 @@ export default function HeaderWithSidebar(props: any) {
             <input
               type="text"
               placeholder="Search"
-              className="border px-2 py-1"
+              className="border bg-white px-2 py-1"
               value={searchQuery}
               onChange={(e) => onSearchChange?.(e.target.value)}
             />
@@ -51,7 +51,7 @@ export default function HeaderWithSidebar(props: any) {
               setShowCategories(false);
               window.location.href = '/';
             }}
-            className="block w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-300 text-gray-700"
+            className="block w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-blue-200 text-gray-700"
           >
             All Categories
           </button>
@@ -62,7 +62,7 @@ export default function HeaderWithSidebar(props: any) {
                 setShowCategories(false);
                 window.location.href = `/?category=${category}`;
               }}
-              className="block w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-300 text-gray-700"
+              className="block w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-blue-200 text-gray-700"
             >
               {category}
             </button>

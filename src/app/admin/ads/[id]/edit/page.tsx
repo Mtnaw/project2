@@ -68,16 +68,16 @@ export default function EditAdPage() {
   useEffect(() => {
     const navbar = document.querySelector('nav');
     if (navbar) {
-      navbar.style.display = 'none';
+      navbar.style.display = '';
     }
 
     // Cleanup: show navbar when component unmounts
-    return () => {
+    /*return () => {
       const navbar = document.querySelector('nav');
       if (navbar) {
         navbar.style.display = '';
       }
-    };
+    };*/
   }, []);
 
   useEffect(() => {
@@ -243,7 +243,7 @@ export default function EditAdPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 pt-20">
+    <div className="min-h-screen flex items-center justify-center bg-gray-200 p-4 pt-20">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-4xl">
         <h1 className="text-2xl font-bold mb-6 text-center">Edit Ad</h1>
         
@@ -305,16 +305,10 @@ export default function EditAdPage() {
               required
             >
               <option value="">Select a category</option>
-              <option value="IT Services">IT Services</option>
-              <option value="Design">Design</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Home Services">Home Services</option>
-              <option value="Education">Education</option>
-              <option value="Health & Wellness">Health & Wellness</option>
-              <option value="House Keeping">House Keeping</option>
               <option value="Construction">Construction</option>
               <option value="Decoration">Decoration</option>
               <option value="Computer Services">Computer Services</option>
+              <option value="House Keeping">House Keeping</option>
               <option value="Restaurant">Restaurant</option>
             </select>
           </div>
@@ -392,23 +386,6 @@ export default function EditAdPage() {
               className="w-full px-3 py-2 border border-gray-300 rounded"
             />
           </div>
-
-          <div className="md:col-span-2 flex justify-between mt-4">
-            <button
-              type="button"
-              onClick={() => router.push('/admin/dashboard')}
-              className="bg-blue-400 text-white py-2 px-6 rounded hover:bg-blue-600 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-blue-400 text-white py-2 px-6 rounded hover:bg-blue-600 disabled:bg-gray-400"
-            >
-              {isSubmitting ? 'Updating...' : 'Update Ad'}
-            </button>
-           </div>
 
            {/* Additional Images and Videos Management */}
            <div className="mb-4 md:col-span-2">
@@ -492,6 +469,23 @@ export default function EditAdPage() {
                style={{ display: 'none' }}
              />
              <p className="text-xs text-gray-500">Upload additional images and videos. Click × to remove files.</p>
+           </div>
+
+           <div className="md:col-span-2 flex justify-between mt-4">
+            <button
+              type="button"
+              onClick={() => router.push('/admin/dashboard')}
+              className="bg-blue-400 text-white py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-blue-400 text-white py-2 px-6 rounded hover:bg-blue-600 disabled:bg-gray-400"
+            >
+              {isSubmitting ? 'Updating...' : 'Update Ad'}
+            </button>
            </div>
          </form>
        </div>

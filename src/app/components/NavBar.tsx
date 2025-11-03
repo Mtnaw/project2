@@ -22,22 +22,22 @@ export default function NavBar() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-4 h-16 bg-white shadow-lg" style={{ backgroundImage: 'url(/uploads/bright-yellow-background-45loowtl2hjgu863.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
+    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-4 h-16 bg-white shadow-lg" style={{ backgroundImage: 'url(/uploads/2n.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
       <div className="flex items-center gap-4 px-8">
         <Link href="/" className="text-2xl font-bold text-blue-600">
           Online Services Advertising
         </Link>
       </div>
       <div className="flex space-x-6 px-8">
-        <Link href="/" className="text-blue-600 hover:text-blue-800 text-base">
+        <Link href="/" className="text-blue-600 hover:text-blue-900 text-base">
           Home
         </Link>
         
         <>
-          <Link href="/contact" className="text-blue-600 hover:text-blue-800 text-base">
+          <Link href="/contact" className="text-blue-600 hover:text-blue-900 text-base">
             Contact Us
           </Link>
-          <Link href="/about" className="text-blue-600 hover:text-blue-800 text-base">
+          <Link href="/about" className="text-blue-600 hover:text-blue-900 text-base">
             About Us
           </Link>
         </>
