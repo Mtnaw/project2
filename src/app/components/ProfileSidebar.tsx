@@ -201,12 +201,11 @@ export default function ProfileSidebar({ isOpen = true }: { isOpen?: boolean }) 
           onClick={openModal}
           className="flex items-center space-x-2 text-left p-3 mb-4 rounded hover:bg-gray-200 transition-colors cursor-pointer"
         >
-          <span className="text-gray-600">✏️</span>
-          <span className="text-blue-600 font-medium">Edit profile</span>
+          <span className="text-blue-600 font-medium px-11">✏️  Edit profile</span>
         </button>
 
 
-        <div className="mt-auto">
+        <div className="mt-auto px-22 py-90">
           <LogoutButton />
         </div>
       </aside>

@@ -37,8 +37,10 @@ export default function CreatePostPage() {
     startDate: '',
     endDate: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const videoInputRef = useRef<HTMLInputElement>(null);
+   const [isSubmitting, setIsSubmitting] = useState(false);
+   const videoInputRef = useRef<HTMLInputElement>(null);
+   const [isPhotoDragOver, setIsPhotoDragOver] = useState(false);
+   const [isVideoDragOver, setIsVideoDragOver] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -88,8 +90,54 @@ export default function CreatePostPage() {
     }
   };
 
+  const handlePhotoDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsPhotoDragOver(true);
+  };
+
+  const handlePhotoDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsPhotoDragOver(false);
+  };
+
+  const handleVideoDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsVideoDragOver(true);
+  };
+
+  const handleVideoDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsVideoDragOver(false);
+  };
+
+  const handlePhotoDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsPhotoDragOver(false);
+    const files = e.dataTransfer.files;
+    if (files.length > 0 && files[0].type.startsWith('image/')) {
+      const dt = new DataTransfer();
+      dt.items.add(files[0]);
+      if (fileInputRef.current) {
+        fileInputRef.current.files = dt.files;
+      }
+    }
+  };
+
+  const handleVideoDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsVideoDragOver(false);
+    const files = e.dataTransfer.files;
+    if (files.length > 0 && files[0].type.startsWith('video/')) {
+      const dt = new DataTransfer();
+      dt.items.add(files[0]);
+      if (videoInputRef.current) {
+        videoInputRef.current.files = dt.files;
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-white-100 p-4">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-2xl">
         <h1 className="text-2xl font-bold mb-6 text-center">Create New Post</h1>
         
@@ -211,28 +259,50 @@ export default function CreatePostPage() {
             />
           </div>
 
-           <div className="mb-4 md:col-span-2">
-             <label className="block text-gray-700 mb-2">Photo</label>
-             <input
-               type="file"
-               ref={fileInputRef}
-               name="img"
-               accept="image/*"
-               className="w-full px-3 py-2 border border-gray-300 rounded"
-               required
-             />
-           </div>
+            <div className="mb-4 md:col-span-2">
+              <label className="block text-gray-700 mb-2">Photo</label>
+              <div
+                onDragOver={handlePhotoDragOver}
+                onDragLeave={handlePhotoDragLeave}
+                onDrop={handlePhotoDrop}
+                className={`w-full px-3 py-2 border-2 border-dashed rounded transition-colors ${
+                  isPhotoDragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50'
+                }`}
+              >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  name="img"
+                  accept="image/*"
+                  className="w-full"
+                  style={{ background: 'transparent', border: 'none' }}
+                  required
+                />
+                <p className="text-sm text-gray-500 mt-1">Drag and drop an image here or click to select</p>
+              </div>
+            </div>
 
-           <div className="mb-4 md:col-span-2">
-             <label className="block text-gray-700 mb-2">Video Clip</label>
-             <input
-               type="file"
-               ref={videoInputRef}
-               name="video"
-               accept="video/*"
-               className="w-full px-3 py-2 border border-gray-300 rounded"
-             />
-           </div>
+            <div className="mb-4 md:col-span-2">
+              <label className="block text-gray-700 mb-2">Video Clip</label>
+              <div
+                onDragOver={handleVideoDragOver}
+                onDragLeave={handleVideoDragLeave}
+                onDrop={handleVideoDrop}
+                className={`w-full px-3 py-2 border-2 border-dashed rounded transition-colors ${
+                  isVideoDragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50'
+                }`}
+              >
+                <input
+                  type="file"
+                  ref={videoInputRef}
+                  name="video"
+                  accept="video/*"
+                  className="w-full"
+                  style={{ background: 'transparent', border: 'none' }}
+                />
+                <p className="text-sm text-gray-500 mt-1">Drag and drop a video here or click to select</p>
+              </div>
+            </div>
 
           <div className="md:col-span-2 flex justify-end mt-4">
             <button

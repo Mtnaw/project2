@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
@@ -66,18 +66,18 @@ export default function EditAdPage() {
 
   // Hide navbar on edit page
   useEffect(() => {
-    const navbar = document.querySelector('nav');
+    /*const navbar = document.querySelector('nav');
     if (navbar) {
-      navbar.style.display = '';
-    }
+      navbar.style.display = 'none';
+    }*/
 
     // Cleanup: show navbar when component unmounts
-    /*return () => {
+    return () => {
       const navbar = document.querySelector('nav');
       if (navbar) {
         navbar.style.display = '';
       }
-    };*/
+    };
   }, []);
 
   useEffect(() => {
@@ -243,7 +243,7 @@ export default function EditAdPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200 p-4 pt-20">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 pt-20">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-4xl">
         <h1 className="text-2xl font-bold mb-6 text-center">Edit Ad</h1>
         
@@ -475,14 +475,14 @@ export default function EditAdPage() {
             <button
               type="button"
               onClick={() => router.push('/admin/dashboard')}
-              className="bg-blue-400 text-white py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+              className="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-400 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-blue-400 text-white py-2 px-6 rounded hover:bg-blue-600 disabled:bg-gray-400"
+              className="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-400 disabled:bg-gray-400"
             >
               {isSubmitting ? 'Updating...' : 'Update Ad'}
             </button>
