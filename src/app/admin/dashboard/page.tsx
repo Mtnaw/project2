@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import AddAdSection from "@/app/components/AddAdSection";
 import AdCard from "@/app/components/AdCard";
 import ProfileSidebar from "@/app/components/ProfileSidebar";
+import ExpirationNotification from "@/app/components/ExpirationNotification";
 import { useSidebar } from "@/app/components/SidebarContext";
+import { isExpiringWithin2Days } from "@/lib/utils/dateUtils";
 
 import type { Ad } from "@/app/data/mockAds";
 
@@ -84,6 +86,9 @@ function DashboardContent() {
   });
   const clients = Array.from(clientsMap.values()).sort((a, b) => new Date(b.lastVisit).getTime() - new Date(a.lastVisit).getTime());
 
+  // Get ads expiring within 5 days
+  const expiringAds = ads.filter(ad => isExpiringWithin2Days(ad.endDate));
+
   return (
     <div className="flex gap-6 p-6">
       <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'lg:mr-64' : ''}`}>
@@ -106,9 +111,29 @@ function DashboardContent() {
             <p className="text-3xl font-bold text-purple-600">{clients.length}</p>
             <p className="text-sm text-gray-500">Registered users</p>
           </div>
-        </div>
-      
-        {/* Client History */}
+         </div>
+
+         {/* Expiration Notifications */}
+         {expiringAds.length > 0 && (
+           <div className="bg-white rounded-lg border border-gray-200 shadow-sm mb-8">
+             <div className="px-6 py-4 border-b border-gray-200">
+               <h2 className="text-xl font-semibold text-gray-900">⚠️ Expiration Alerts</h2>
+                <p className="text-sm text-gray-600 mt-1">Ads expiring within 5 days</p>
+             </div>
+             <div className="p-6">
+               {expiringAds.map((ad) => (
+                 <ExpirationNotification
+                   key={ad.id}
+                   endDate={ad.endDate}
+                   adTitle={ad.title}
+                   className="mb-4 last:mb-0"
+                 />
+               ))}
+             </div>
+           </div>
+         )}
+
+         {/* Client History */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm mb-8">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-xl font-semibold text-gray-900">Client History</h2>

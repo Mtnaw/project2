@@ -20,6 +20,9 @@ interface Ad {
   title: string;
   description: string;
   img: string;
+  video?: string;
+  additionalImages?: string[];
+  additionalVideos?: string[];
   category: string;
   price: number;
   contact: string;

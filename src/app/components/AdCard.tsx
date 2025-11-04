@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Ad } from '@/app/data/mockAds';
+import ExpirationNotification from './ExpirationNotification';
 
 interface AdCardProps {
   ad: Ad;
@@ -78,6 +79,13 @@ export default function AdCard({ ad, hideCategory, isMenuOpen = false, onMenuTog
           Read more
         </button>
       </Link>
+      <div className='py-2'>
+      <ExpirationNotification
+        endDate={ad.endDate}
+        adTitle={ad.title}
+        className="mb-3"
+      />
+      </div>
     </div>
   );
 }

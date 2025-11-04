@@ -55,7 +55,7 @@ export default function HeaderWithSidebar(props: any) {
           >
             All Categories
           </button>
-          {categories.map((category) => (
+          {categories.map((category: string) => (
             <button
               key={category}
               onClick={() => {

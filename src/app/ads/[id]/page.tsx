@@ -3,6 +3,7 @@
 import { Ad } from '@/app/data/mockAds';
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
+import ExpirationNotification from '@/app/components/ExpirationNotification';
 
 export default function AdDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -98,9 +99,9 @@ export default function AdDetailPage({ params }: { params: { id: string } }) {
           </svg>
           Back 
         </Link>
-      </div>
-      <h1 className="text-3xl font-bold mb-4">{ad.title}</h1>
-       <div className="flex flex-col md:flex-row gap-6">
+       </div>
+       <h1 className="text-3xl font-bold mb-4">{ad.title}</h1>
+        <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/4">
             <img
               src={ad.img}

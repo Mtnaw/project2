@@ -16,6 +16,7 @@ export function dbRowToAd(row: any): Ad {
     startDate: row.start_date,
     endDate: row.end_date,
     views: row.views,
+    approved: row.approved || true, // Default to approved if not set
   };
 }
 
@@ -142,12 +143,13 @@ export async function searchAds(searchTerm: string): Promise<Ad[]> {
 // Get ads by date range
 export async function getAdsByDateRange(startDate: string, endDate: string): Promise<Ad[]> {
   const result = await query(
-    `SELECT id, title, description, img, category, price, contact, 
-            start_date, end_date, views 
-     FROM ads 
+    `SELECT id, title, description, img, category, price, contact,
+            start_date, end_date, views
+     FROM ads
      WHERE start_date <= $2 AND end_date >= $1
      ORDER BY start_date ASC`,
     [startDate, endDate]
   );
   return result.rows.map(dbRowToAd);
 }
+

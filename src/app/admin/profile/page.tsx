@@ -1,6 +1,6 @@
 'use client';
 
-import { updateProfile } from "../../../../lib/actions/profile";
+import { updateProfile } from "@/lib/actions/profile";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
