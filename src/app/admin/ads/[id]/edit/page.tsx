@@ -246,8 +246,8 @@ export default function EditAdPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 pt-20">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 min-h-screen flex items-center justify-center bg-gray-200 bg-opacity-50 p-2 pt-25">
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl max-h-[90vh] overflow-y-auto">
         <h1 className="text-2xl font-bold mb-6 text-center">Edit Ad</h1>
         
         {currentImage && (
