@@ -118,7 +118,7 @@ function DashboardContent() {
            <div className="bg-white rounded-lg border border-gray-200 shadow-sm mb-8">
              <div className="px-6 py-4 border-b border-gray-200">
                <h2 className="text-xl font-semibold text-gray-900">⚠️ Expiration Alerts</h2>
-                <p className="text-sm text-gray-600 mt-1">Ads expiring within 5 days</p>
+                <p className="text-sm text-gray-600 mt-1">Ads expiring within 2 days</p>
              </div>
              <div className="p-6">
                {expiringAds.map((ad) => (
