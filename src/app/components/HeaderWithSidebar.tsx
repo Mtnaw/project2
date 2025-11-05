@@ -19,7 +19,7 @@ export default function HeaderWithSidebar(props: any) {
   return (
     <div>
        <header className={`flex justify-between items-center py-3 w-full bg-gray-100 ${isSidebarOpen ? 'lg:mr-64' : ''}`} style={{ backgroundImage: 'url(/uploads/1n.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
-        <div className="flex items-center space-x-2 px-8">
+        <div className="flex items-center space-x-2 px-6">
           <button
             className="text-2xl"
             onClick={() => setShowCategories(!showCategories)}

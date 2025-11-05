@@ -46,6 +46,7 @@ export default function AdCard({ ad, hideCategory, isMenuOpen = false, onMenuTog
               >
                 Edit
               </Link>
+
               <button
                 onClick={async () => {
                   if (confirm('Are you sure you want to delete this ad?')) {
