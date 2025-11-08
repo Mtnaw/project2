@@ -248,8 +248,18 @@ export default function EditAdPage() {
   return (
     <div className="fixed inset-0 min-h-screen flex items-center justify-center bg-gray-200 bg-opacity-50 p-2 pt-25">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        <h1 className="text-2xl font-bold mb-6 text-center">Edit Ad</h1>
-        
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-center">Edit Ad</h1>
+          <button
+                onClick={() => router.push('/admin/dashboard')}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+          </button>
+        </div>
+
         {currentImage && (
           <div className="mb-4 text-center">
             <img
