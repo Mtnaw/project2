@@ -45,7 +45,13 @@ export default function ProfileSidebar({ isOpen = true }: { isOpen?: boolean }) 
 
     if (user?.role === 'admin') {
       fetch('/api/ads')
-        .then(res => res.json())
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            throw new Error(`Failed to fetch ads: ${res.status}`);
+          }
+        })
         .then(data => setAds(data))
         .catch(error => console.error('Error fetching ads:', error));
     }

@@ -106,7 +106,7 @@ export default function EditAdPage() {
           setExistingAdditionalImages(ad.additionalImages || []);
           setExistingAdditionalVideos(ad.additionalVideos || []);
         } else {
-          console.error('Failed to fetch ad');
+          console.error('Failed to fetch ad:', response.status);
           router.push('/admin/dashboard');
         }
       } catch (error) {

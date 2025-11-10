@@ -27,21 +27,28 @@ export default function AdDetailPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     async function fetchAd() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/ads?id=${id}`, {
-        cache: 'no-store',
-      });
-      if (response.ok) {
-        const adData = await response.json();
-        setAd(adData);
+      try {
+        const response = await fetch(`/api/ads?id=${id}`, {
+          cache: 'no-store',
+        });
+        if (response.ok) {
+          const adData = await response.json();
+          setAd(adData);
 
-        // Collect all images (main + additional) for the lightbox
-        const images = [adData.img];
-        if (adData.additionalImages) {
-          images.push(...adData.additionalImages);
+          // Collect all images (main + additional) for the lightbox
+          const images = [adData.img];
+          if (adData.additionalImages) {
+            images.push(...adData.additionalImages);
+          }
+          setAllImages(images);
+        } else {
+          console.error('Failed to fetch ad:', response.status);
         }
-        setAllImages(images);
+      } catch (error) {
+        console.error('Error fetching ad:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
 
     fetchAd();

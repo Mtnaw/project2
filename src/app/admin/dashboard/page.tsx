@@ -39,7 +39,13 @@ function DashboardContent() {
 
     // Fetch ads data
     fetch('/api/ads')
-      .then(res => res.json())
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(`Failed to fetch ads: ${res.status}`);
+        }
+      })
       .then(data => {
         setAds(data);
         setLoading(false);

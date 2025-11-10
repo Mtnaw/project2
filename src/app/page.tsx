@@ -26,9 +26,13 @@ export default function Home() {
   const fetchAds = useCallback(async () => {
     try {
       const response = await fetch('/api/ads');
-      const data = await response.json();
-      setAds(data);
-      setFilteredAds(data);
+      if (response.ok) {
+        const data = await response.json();
+        setAds(data);
+        setFilteredAds(data);
+      } else {
+        console.error('Failed to fetch ads:', response.status);
+      }
     } catch (error) {
       console.error('Error fetching ads:', error);
     } finally {
