@@ -11,9 +11,10 @@ interface AdCardProps {
   isMenuOpen?: boolean;
   onMenuToggle?: () => void;
   onMenuClose?: () => void;
+  onDelete?: (adId: string) => void;
 }
 
-export default function AdCard({ ad, hideCategory, isMenuOpen = false, onMenuToggle, onMenuClose }: AdCardProps) {
+export default function AdCard({ ad, hideCategory, isMenuOpen = false, onMenuToggle, onMenuClose, onDelete }: AdCardProps) {
   const router = useRouter();
 
   return (
@@ -55,7 +56,11 @@ export default function AdCard({ ad, hideCategory, isMenuOpen = false, onMenuTog
                         method: 'DELETE',
                       });
                       if (response.ok) {
-                        router.refresh(); // Refresh client-side without full reload
+                        if (onDelete) {
+                          onDelete(ad.id);
+                        } else {
+                          router.refresh(); // Fallback to refresh if no onDelete provided
+                        }
                       } else {
                         const errorData = await response.json();
                         alert(`Failed to delete ad: ${errorData.error || 'Unknown error'}`);

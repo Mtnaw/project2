@@ -128,7 +128,10 @@ export async function POST(request: Request) {
     
     ads.push(newAd);
     await writeAds(ads);
-    
+
+    // Add a 5-second delay to make the process appear more substantial
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
     return NextResponse.json(newAd, { status: 201 });
   } catch (error) {
     console.error('Error creating ad:', error);

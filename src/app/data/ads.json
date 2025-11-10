@@ -1,27 +1,5 @@
 [
   {
-    "id": "4",
-    "title": "Naw Service",
-    "description": "NawNaw",
-    "img": "/uploads/ad-1761627660259.jpg",
-    "category": "Education",
-    "price": 400,
-    "contact": "naw@gmail.com",
-    "supplierName": "Naw",
-    "email": "naw@gmail.com",
-    "startDate": "2025-10-01",
-    "endDate": "2025-10-23",
-    "views": 0,
-    "approved": true,
-    "history": [
-      {
-        "date": "2025-10-01",
-        "action": "Created",
-        "user": "naw@gmail.com"
-      }
-    ]
-  },
-  {
     "id": "5",
     "title": "Hii Service",
     "description": "Hiiiiiiiiiiii",
@@ -42,65 +20,6 @@
         "user": "hi@email.com"
       }
     ]
-  },
-  {
-    "id": "6",
-    "title": "Gam Service",
-    "description": "gaaaaaaaaaaaaaaaaaaaa",
-    "img": "/uploads/ad-1761627767048.jpg",
-    "category": "Decoration",
-    "price": 600,
-    "contact": "gam@email.com",
-    "supplierName": "Gamn",
-    "email": "gam@email.com",
-    "startDate": "2025-10-05",
-    "endDate": "2025-11-09",
-    "views": 0,
-    "approved": true,
-    "history": [
-      {
-        "date": "2025-10-05",
-        "action": "Created",
-        "user": "gam@email.com"
-      }
-    ]
-  },
-  {
-    "id": "8",
-    "title": "vv Service",
-    "description": "hhhhhhhhhhhhhhhhvvvvvvvvvvvv",
-    "img": "/uploads/ad-1761748737205.jpg",
-    "category": "Education",
-    "price": 60,
-    "contact": "v@email.com",
-    "supplierName": "vv",
-    "email": "v@email.com",
-    "startDate": "2025-10-03",
-    "endDate": "2025-10-30",
-    "views": 0,
-    "approved": true,
-    "history": [
-      {
-        "date": "2025-10-03",
-        "action": "Created",
-        "user": "v@email.com"
-      }
-    ]
-  },
-  {
-    "id": "9",
-    "title": "JSP Service",
-    "description": "Ja MUN MUN MUN mun",
-    "img": "/uploads/ad-1761974286046.jpg",
-    "category": "Construction",
-    "price": 500,
-    "contact": "jsp@email.com",
-    "supplierName": "JSP",
-    "email": "jsp@email.com",
-    "startDate": "2025-11-01",
-    "endDate": "2025-11-20",
-    "views": 0,
-    "approved": true
   },
   {
     "id": "10",
@@ -166,49 +85,8 @@
     ]
   },
   {
-    "id": "13",
-    "title": "Smile Service",
-    "description": "smile yourself h",
-    "img": "/uploads/ad-1762179230709-FB_IMG_1673681171126.jpg",
-    "category": "Decoration",
-    "price": 500,
-    "contact": "smile@email.com",
-    "supplierName": "Smile",
-    "email": "smile@email.com",
-    "startDate": "2025-10-29",
-    "endDate": "2025-11-06",
-    "views": 0,
-    "approved": true,
-    "additionalImages": [
-      "/uploads/ad-additional-1762006949361.2192.jpg",
-      "/uploads/ad-additional-1762006949375.371.jpg",
-      "/uploads/ad-additional-1762006949390.9492.jpg",
-      "/uploads/ad-additional-1762006949394.6995.jpg",
-      "/uploads/ad-additional-1762006949408.5303.jpg"
-    ]
-  },
-  {
-    "id": "14",
-    "title": "Sut Service",
-    "description": "kjkjkljlkjlkjlkjklfgfghhgbf",
-    "img": "/uploads/ad-1762233028100.jpg",
-    "category": "Decoration",
-    "price": 400,
-    "contact": "su@email.com",
-    "supplierName": "Sut",
-    "email": "su@email.com",
-    "startDate": "2025-11-01",
-    "endDate": "2025-11-30",
-    "views": 0,
-    "approved": true,
-    "additionalImages": [
-      "/uploads/ad-additional-1762233028110.7712.jpg",
-      "/uploads/ad-additional-1762233028128.2288.jpg"
-    ]
-  },
-  {
     "id": "15",
-    "title": "luffy & naruto Service",
+    "title": "Lu & Na",
     "description": "kjkjasjfd;ksjf",
     "img": "/uploads/ad-1762760829724.jpg",
     "category": "Decoration",
@@ -222,6 +100,62 @@
     "approved": true,
     "additionalImages": [
       "/uploads/ad-additional-1762760829727.8025.jpg"
+    ]
+  },
+  {
+    "id": "16",
+    "title": "luffy Service",
+    "description": "hhheeelllooo",
+    "img": "/uploads/ad-1762763219407.jpg",
+    "category": "Computer Service",
+    "price": 500,
+    "contact": "l@email.com",
+    "supplierName": "luffy",
+    "email": "l@email.com",
+    "startDate": "2025-11-10",
+    "endDate": "2025-11-30",
+    "views": 0,
+    "approved": true,
+    "additionalImages": [
+      "/uploads/ad-additional-1762763219411.1562.jpg",
+      "/uploads/ad-additional-1762763219415.806.jpg"
+    ]
+  },
+  {
+    "id": "18",
+    "title": "jingpo Service",
+    "description": "jingpo su",
+    "img": "/uploads/ad-1762765131077.jpg",
+    "category": "Decoration",
+    "price": 300,
+    "contact": "ji@email.com",
+    "supplierName": "jingpo",
+    "email": "ji@email.com",
+    "startDate": "2025-11-10",
+    "endDate": "2025-11-20",
+    "views": 0,
+    "approved": true,
+    "additionalImages": [
+      "/uploads/ad-additional-1762765131081.7642.jpg",
+      "/uploads/ad-additional-1762765131101.0808.jpg"
+    ]
+  },
+  {
+    "id": "19",
+    "title": "အီဂျစ် Service",
+    "description": "visit to egypt",
+    "img": "/uploads/ad-1762765592736.jpg",
+    "category": "Education",
+    "price": 500,
+    "contact": "eg@email.com",
+    "supplierName": "အီဂျစ်",
+    "email": "eg@email.com",
+    "startDate": "2025-11-10",
+    "endDate": "2025-11-25",
+    "views": 0,
+    "approved": true,
+    "additionalImages": [
+      "/uploads/ad-additional-1762765592739.2402.jpg"
     ]
   }
 ]

@@ -16,7 +16,7 @@ export async function POST() {
         success: false,
         error: 'Failed to complete cleanup'
       },
-      { status: 500 }
+      { status: 5 }
     );
   }
 }

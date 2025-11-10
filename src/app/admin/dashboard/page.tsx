@@ -18,7 +18,12 @@ function DashboardContent() {
   const [ads, setAds] = useState<Ad[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { isSidebarOpen, closeSidebar } = useSidebar();
+
+  const handleDeleteAd = (adId: string) => {
+    setAds(prevAds => prevAds.filter(ad => ad.id !== adId));
+  };
 
   const handleMenuToggle = (adId: string) => {
     setActiveMenuId(activeMenuId === adId ? null : adId);
@@ -26,6 +31,27 @@ function DashboardContent() {
 
   const handleMenuClose = () => {
     setActiveMenuId(null);
+  };
+
+  const fetchAds = async () => {
+    try {
+      const res = await fetch('/api/ads');
+      if (!res.ok) {
+        throw new Error(`Failed to fetch ads: ${res.status}`);
+      }
+      const data = await res.json();
+      // Sort ads by creation date (newest first) to show latest posts faster
+      const sortedAds = data.sort((a: Ad, b: Ad) => {
+        const dateA = new Date(a.endDate).getTime();
+        const dateB = new Date(b.endDate).getTime();
+        return dateB - dateA; // Newest first
+      });
+      setAds(sortedAds);
+    } catch (error) {
+      console.error('Error fetching ads:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -37,23 +63,31 @@ function DashboardContent() {
       return;
     }
 
+    // Check for success message from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('created') === 'true') {
+      setShowSuccessMessage(true);
+      // Remove the query param from URL
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+      // Hide message after 3 seconds
+      setTimeout(() => setShowSuccessMessage(false), 3000);
+    }
+
     // Fetch ads data
-    fetch('/api/ads')
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error(`Failed to fetch ads: ${res.status}`);
-        }
-      })
-      .then(data => {
-        setAds(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching ads:', error);
-        setLoading(false);
-      });
+    fetchAds();
+
+    // Listen for ad creation events
+    const handleAdCreated = () => {
+      fetchAds();
+    };
+
+    window.addEventListener('adCreated', handleAdCreated);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('adCreated', handleAdCreated);
+    };
   }, [session, status, router]);
 
   // Prevent scrolling when sidebar is open
@@ -99,6 +133,12 @@ function DashboardContent() {
     <div className="flex gap-6 p-6">
       <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'lg:mr-64' : ''}`}>
         <div className="min-h-screen bg-white-100">
+          {/* Success Message */}
+          {showSuccessMessage && (
+            <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+              Post created successfully!
+            </div>
+          )}
           <div className="max-w-6xl mx-auto p-8">
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -180,6 +220,7 @@ function DashboardContent() {
                   isMenuOpen={activeMenuId === ad.id}
                   onMenuToggle={() => handleMenuToggle(ad.id)}
                   onMenuClose={handleMenuClose}
+                  onDelete={handleDeleteAd}
                 />
               ))
             ) : (

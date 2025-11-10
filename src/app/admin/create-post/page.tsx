@@ -50,7 +50,7 @@ export default function CreatePostPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       const fd = new FormData();
       fd.append('title', formData.title);
@@ -73,22 +73,23 @@ export default function CreatePostPage() {
          fd.append('video', videoFile);
        }
 
-      const response = await fetch('/api/ads/create', {
-        method: 'POST',
-        body: fd
-      });
+       const response = await fetch('/api/ads/create', {
+         method: 'POST',
+         body: fd
+       });
 
-      if (response.ok) {
-        router.push('/admin/dashboard');
-      } else {
-        console.error('Failed to create post');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+       if (response.ok) {
+         // Immediately redirect to dashboard with success indicator
+         router.push('/admin/dashboard?created=true');
+       } else {
+         console.error('Failed to create post');
+       }
+     } catch (error) {
+       console.error('Error:', error);
+     } finally {
+       setIsSubmitting(false);
+     }
+   };
 
   const handlePhotoDragOver = (e: React.DragEvent) => {
     e.preventDefault();
