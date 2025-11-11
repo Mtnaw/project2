@@ -1,0 +1,21 @@
+[
+  {
+    "id": "27",
+    "title": "JingPo Service",
+    "description": "jkjjkjifjekji",
+    "img": "/uploads/ad-1762843783584.jpg",
+    "category": "Decoration",
+    "price": 600,
+    "contact": "jing@email.com",
+    "supplierName": "JingPo",
+    "email": "jing@email.com",
+    "startDate": "2025-11-11",
+    "endDate": "2025-11-30",
+    "views": 0,
+    "approved": true,
+    "additionalImages": [
+      "/uploads/ad-additional-1762843783596.2917.jpg"
+    ],
+    "deletedAt": "2025-11-11T06:50:36.816Z"
+  }
+]

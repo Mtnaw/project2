@@ -103,12 +103,58 @@ async function deleteAd(id: string): Promise<boolean> {
     const adIndex = ads.findIndex((ad: any) => ad.id === id);
     if (adIndex === -1) return false;
 
+    const adToDelete = ads[adIndex];
+
+    // Save to history
+    const historyFilePath = path.join(process.cwd(), 'history', 'history.json');
+    let history = [];
+    try {
+      const historyData = await fs.readFile(historyFilePath, 'utf-8');
+      if (historyData.trim()) {
+        history = JSON.parse(historyData);
+      }
+    } catch (err) {
+      // History file doesn't exist or is empty, start with empty array
+    }
+
+    // Add deleted ad to history with deletion timestamp
+    history.push({
+      ...adToDelete,
+      deletedAt: new Date().toISOString()
+    });
+
+    await fs.writeFile(historyFilePath, JSON.stringify(history, null, 2));
+
     // Delete associated image file
-    const imgPath = path.join(process.cwd(), 'public', ads[adIndex].img);
+    const imgPath = path.join(process.cwd(), 'public', adToDelete.img);
     try {
       await fs.unlink(imgPath);
     } catch (err) {
       console.error('Error deleting image file:', err);
+    }
+
+    // Delete additional images
+    if (adToDelete.additionalImages) {
+      for (const img of adToDelete.additionalImages) {
+        const additionalImgPath = path.join(process.cwd(), 'public', img);
+        try {
+          await fs.unlink(additionalImgPath);
+        } catch (err) {
+          console.error('Error deleting additional image file:', err);
+        }
+      }
+    }
+
+    // Delete additional videos
+    if (adToDelete.additionalVideos) {
+      for (const video of adToDelete.additionalVideos) {
+        const additionalVideoPath = path.join(process.cwd(), 'public', video);
+        try {
+          await fs.unlink(additionalVideoPath);
+        } catch (err) {
+          console.error('Error deleting additional video file:', err);
+        }
+      }
     }
 
     // Remove ad from array
