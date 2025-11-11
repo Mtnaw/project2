@@ -27,15 +27,16 @@ export default function ContactPage() {
   return (
     <div className="flex gap-6 px-6 pb-6">
       <main className={`flex-1 max-w-8xl flex flex-col items-center transition-all duration-300 ${isSidebarOpen ? 'lg:mr-64' : ''}`}>
-        <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
-        <h2 className="text-2xl mb-6">Welcome</h2>
+        <h1 className="text-3xl font-bold mb-4 py-5">Contact Us</h1>
+        <h2 className="text-2xl font-bold mb-6">Welcome to Our Web Page</h2>
         <div className="text-center space-y-4">
           <div>
             <p className="text-lg font-semibold">
-              For advertising inquiries, please contact us at<br />
-              Email: osa2025@gmail.com<br />
-              or<br />
-              Phone: 18726354901
+              <div>ကျွန်တော်တို့ရဲ့ Web Site မှာဆိုရင် ၂၄ နာရီ ဝင်ကြည့်ပြီး Service center တွေကိုရှာဖွေနိုင်ပါတယ်။</div>
+              <div>ကျွန်တော်တို့ရဲ့  Web Site မှာကြော်ငြာများထည့်သွင်းချင်ပါကအောက်ပါ phone, email များဖြင့်ဆက်သွယ်နိုင်ပါသည်။</div>
+                    <div>Phone ;-  09-992334543</div>
+                    Email;-  Nawli@email.com
+
             </p>
           </div>
         </div>
