@@ -123,7 +123,7 @@ async function sendExpirationNotifications(): Promise<void> {
     console.log(`Notifications: Found ${expiringSoonAds.length} ads expiring within 2 days`);
 
     // Create email transporter
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT),
       secure: false,
