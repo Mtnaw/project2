@@ -30,14 +30,11 @@ export default function ContactPage() {
         <h1 className="text-3xl font-bold mb-4 py-5">Contact Us</h1>
         <h2 className="text-2xl font-bold mb-6">Welcome to Our Web Page</h2>
         <div className="text-center space-y-4">
-          <div>
-            <p className="text-lg font-semibold">
-              <div>ကျွန်တော်တို့ရဲ့ Web Site မှာဆိုရင် ၂၄ နာရီ ဝင်ကြည့်ပြီး Service center တွေကိုရှာဖွေနိုင်ပါတယ်။</div>
-              <div>ကျွန်တော်တို့ရဲ့  Web Site မှာကြော်ငြာများထည့်သွင်းချင်ပါကအောက်ပါ phone, email များဖြင့်ဆက်သွယ်နိုင်ပါသည်။</div>
-                    <div>Phone ;-  09-992334543</div>
-                    Email;-  Nawli@email.com
-
-            </p>
+          <div className="text-lg font-semibold space-y-2">
+            <div>ကျွန်တော်တို့ရဲ့ Web Site မှာဆိုရင် ၂၄ နာရီ ဝင်ကြည့်ပြီး Service center တွေကိုရှာဖွေနိုင်ပါတယ်။</div>
+            <div>ကျွန်တော်တို့ရဲ့  Web Site မှာကြော်ငြာများထည့်သွင်းချင်ပါကအောက်ပါ phone, email များဖြင့်ဆက်သွယ်နိုင်ပါသည်။</div>
+            <div>Phone ;-  09-992334543</div>
+            <div>Email;-  Nawli@email.com</div>
           </div>
         </div>
       </main>
