@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 // import { GeistSans, GeistMono } from '@geist/font';
 import "./globals.css";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth-config";
 import Providers from "@/app/providers";
 //import Home from "@/app/page";
 import NavBar from "@/app/components/NavBar";
@@ -18,13 +16,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
-  const isAdmin = session?.user?.role === "admin";
-
   return (
     <html lang="en">
       <body className="antialiased">
-        <Providers session={session}>
+        <Providers>
           <SidebarProvider>
             <NavBar />
             <main className="w-full pt-16">{children}</main>

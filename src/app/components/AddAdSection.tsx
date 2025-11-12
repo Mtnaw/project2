@@ -324,7 +324,7 @@ export default function AddAdSection() {
                       <option value="Construction">Construction</option>
                       <option value="Decoration">Decoration</option>
                       <option value="Computer Service">Computer Service</option>
-                      <option value="Home Keeping">Home Keeping</option>
+                      <option value="Home Keeping">House Keeping</option>
                       <option value="Education">Education</option>
                       <option value="Restaurant">Restaurant</option>
                     </select>
