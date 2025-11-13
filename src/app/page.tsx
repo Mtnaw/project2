@@ -114,7 +114,7 @@ export default function Home() {
 
   return (
     <div>
-      <HeaderWithSidebar showSearch={true} searchQuery={searchQuery} onSearchChange={setSearchQuery} showCategories={showCategories} setShowCategories={setShowCategories} categories={categories} isSidebarOpen={isSidebarOpen} />
+      <HeaderWithSidebar showSearch={true} searchQuery={searchQuery} onSearchChange={setSearchQuery} showCategories={showCategories} setShowCategories={setShowCategories} categories={categories} isSidebarOpen={false} />
 
       <div className="flex gap-6 p-6">
         <main className="flex-1">
